@@ -1,17 +1,18 @@
 package wro.br.ufpe.cin.selecaoiot;
 
+import java.io.Serializable;
+
 /**
  * Created by Walber on 11/08/2017.
  */
 
-public class Serie {
+public class Serie implements Serializable {
     /**Foram escolhidos apenas alguns itens principais para serem mostrados na tela,
      *  com intuito de diminuir a poluicao visual**/
     private String nome;
     private String urlImagem;
     private String urlTvMaze;
     private String idioma;
-
     private double media;
     private String siteOficial;
     private String resumo;
@@ -21,7 +22,6 @@ public class Serie {
         this.urlImagem = urlImagem;
         this.urlTvMaze = urlTvMaze;
         this.idioma = idioma;
-
         this.media = media;
         this.siteOficial = siteOficial;
         this.resumo = resumo;

@@ -1,5 +1,6 @@
 package wro.br.ufpe.cin.selecaoiot;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SerieAdapter.OnSelectedListener {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // __________________________________________-
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -38,6 +39,20 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         new CarregaSeriesTask().execute(URL);
+    }
+
+    @Override
+    public void onSelected(Serie serie) {
+        Intent intent = new Intent(this, SerieUnicaActivity.class);
+        intent.putExtra("nome", serie.getNome());
+        intent.putExtra("idioma", serie.getIdioma());
+        intent.putExtra("resumo", serie.getResumo());
+        intent.putExtra("linkOficial", serie.getSiteOficial());
+        intent.putExtra("linkApi", serie.getUrlTvMaze());
+        intent.putExtra("media", serie.getMedia());
+        intent.putExtra("imagem", serie.getUrlImagem());
+
+        startActivity(intent);
     }
 
 
@@ -65,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Serie> resultado) {
-            mAdapter = new SerieAdapter(resultado);
+            mAdapter = new SerieAdapter(resultado, MainActivity.this);
             mRecyclerView.setAdapter(mAdapter);
 
         }

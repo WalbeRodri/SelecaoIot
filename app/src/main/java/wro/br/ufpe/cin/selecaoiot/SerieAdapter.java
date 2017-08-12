@@ -4,6 +4,7 @@ package wro.br.ufpe.cin.selecaoiot;
  * Created by Walber on 11/08/2017.
  */
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -26,10 +27,11 @@ import java.util.List;
 
 public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHolder> {
     public List<Serie> listaSeries;
+    OnSelectedListener selec;
 
-    public SerieAdapter( List<Serie> listaSeries) {
+    public SerieAdapter( List<Serie> listaSeries, OnSelectedListener selec) {
         this.listaSeries = listaSeries;
-
+        this.selec = selec;
     }
     @Override
     public SerieViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -40,31 +42,43 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
     }
 
     @Override
-    public void onBindViewHolder(SerieViewHolder holder, int position) {
+    public void onBindViewHolder(SerieViewHolder holder, final int position) {
         Serie serie = listaSeries.get(position);
         holder.vNome.setText(serie.getNome());
         holder.vNota.setText("Nota: "+ serie.getMedia());
         new DownloadImagemTask(holder.vImagem).execute(serie.getUrlImagem());
-
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selec.onSelected(listaSeries.get(position));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return listaSeries.size();
     }
+
+    public interface OnSelectedListener {
+        public void onSelected(Serie serie);
+    }
+
     public static class SerieViewHolder extends RecyclerView.ViewHolder {
         protected TextView vNome;
         protected ImageView vImagem;
         protected TextView vNota;
+        protected View view;
         public SerieViewHolder(View v) {
             super(v);
+            this.view = v;
             vImagem = (ImageView) v.findViewById(R.id.imagem);
             vNome =  (TextView) v.findViewById(R.id.txtNome);
             vNota =  (TextView) v.findViewById(R.id.txtAverage);
         }
     }
 
-    private class DownloadImagemTask extends AsyncTask<String, Void, Bitmap> {
+    public static class DownloadImagemTask extends AsyncTask<String, Void, Bitmap> {
         ImageView vImagem;
 
         public DownloadImagemTask(ImageView vImagem) {
@@ -88,6 +102,8 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
             vImagem.setImageBitmap(result);
         }
     }
+
+
 
 
 }
