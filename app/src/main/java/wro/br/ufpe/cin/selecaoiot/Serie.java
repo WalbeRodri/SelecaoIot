@@ -44,8 +44,6 @@ public class Serie {
         this.idioma = idioma;
     }
 
-
-
     public void setMedia(Double media) {
         this.media = media;
     }
@@ -77,8 +75,6 @@ public class Serie {
     public String getIdioma() {
         return idioma;
     }
-
-
 
     public double getMedia() {
         return media;

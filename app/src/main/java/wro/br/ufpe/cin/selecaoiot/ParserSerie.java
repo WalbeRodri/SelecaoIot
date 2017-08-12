@@ -17,7 +17,6 @@ public class ParserSerie {
     //Parser simples do JSON recebido
     public List<Serie> parse(String series){
         List<Serie> listaRetorno = new ArrayList<>();
-        Log.d("OLHA O LOOOG: ","<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+series.substring(0,10));
         Object obj = (series);
         JSONArray array = null;
         try {
@@ -30,7 +29,6 @@ public class ParserSerie {
         for (int i =0; i <30; i++) {
             try {
                 objetoAuxiliar = (JSONObject)array.get(i);
-//                String[] generos = (objetoAuxiliar.getJSONArray("genres"));
                 serieAuxiliar = new Serie(objetoAuxiliar.getString("name"),
                         ((JSONObject)objetoAuxiliar.get("image")).getString("medium"),
                         objetoAuxiliar.getString("url") ,

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
         public static final String URL = "http://192.168.25.21:4567/allseries/0";
-//    public static final String URL = "http://google.com";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             InputStreamReader inputStreamReader = new InputStreamReader(entrada);
             BufferedReader leituraApi = new BufferedReader(inputStreamReader);
             shows = leituraApi.readLine();
-            Log.d("OLHA O LOOOG: ", ">>>>>>>>>>>>>>>>>>>>>>"+shows.substring(0,10));
         } catch(Exception e) {
             e.printStackTrace();
         } finally
