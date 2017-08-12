@@ -26,9 +26,13 @@ public class ParserSerie {
         }
         JSONObject objetoAuxiliar;
         Serie serieAuxiliar = null;
-        for (int i =0; i <30; i++) {
+        for (int i =0; i <array.length(); i++) {
             try {
+
+                //Pega o item especifico a ser adicionado
                 objetoAuxiliar = (JSONObject)array.get(i);
+
+                //povoa objeto auxiliar
                 serieAuxiliar = new Serie(objetoAuxiliar.getString("name"),
                         ((JSONObject)objetoAuxiliar.get("image")).getString("medium"),
                         objetoAuxiliar.getString("url") ,
@@ -38,9 +42,13 @@ public class ParserSerie {
                         objetoAuxiliar.getString("summary")
                 );
             } catch (JSONException e) {
+                //captura erros de jsons incompletos e/ouu vazios
                 e.printStackTrace();
             }
-            listaRetorno.add(serieAuxiliar);
+
+            //adiciona objeto auxilar caso o mesmo não seja repetido
+            if(!listaRetorno.contains(serieAuxiliar))
+                listaRetorno.add(serieAuxiliar);
 
         }
         return listaRetorno;

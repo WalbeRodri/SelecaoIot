@@ -43,10 +43,19 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
 
     @Override
     public void onBindViewHolder(SerieViewHolder holder, final int position) {
+
+        //povoa as Cardviews
         Serie serie = listaSeries.get(position);
         holder.vNome.setText(serie.getNome());
         holder.vNota.setText("Nota: "+ serie.getMedia());
+
+        //evita reloads demasiados das imagens em tempo de scroll
+        if (holder.vImagem.getDrawable() != null) holder.vImagem.setVisibility(View.GONE);
+
+        //abre task extra para download da imagem, download nunca pode ser feito na thread principal
         new DownloadImagemTask(holder.vImagem).execute(serie.getUrlImagem());
+
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +72,7 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
     public interface OnSelectedListener {
         public void onSelected(Serie serie);
     }
-
+    //ViewHolder
     public static class SerieViewHolder extends RecyclerView.ViewHolder {
         protected TextView vNome;
         protected ImageView vImagem;
@@ -77,7 +86,7 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
             vNota =  (TextView) v.findViewById(R.id.txtAverage);
         }
     }
-
+    //Task assincrona para download das imagens, semelhante ao download da API na main activiy, vide codigo para comentarios
     public static class DownloadImagemTask extends AsyncTask<String, Void, Bitmap> {
         ImageView vImagem;
 
@@ -100,6 +109,7 @@ public class SerieAdapter  extends RecyclerView.Adapter<SerieAdapter.SerieViewHo
 
         protected void onPostExecute(Bitmap result) {
             vImagem.setImageBitmap(result);
+            vImagem.setVisibility(View.VISIBLE);
         }
     }
 

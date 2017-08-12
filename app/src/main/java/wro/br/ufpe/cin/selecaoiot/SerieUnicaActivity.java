@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+
+// Activity Simples de amostragem unica de Serie, foi escolhido passar via intent os atributos para evitar maiores usos da rede
 public class SerieUnicaActivity extends AppCompatActivity {
     private TextView vNomeUnico, vIdioma, vTextResumo, vTxtLinkOficial, vTxtLinkApi;
     private RatingBar vRatingBar;
@@ -36,6 +38,7 @@ public class SerieUnicaActivity extends AppCompatActivity {
 
         this.vRatingBar.setRating((float)(extras.getDouble("media")));
 
+        //Todos os downloads de imagens sao iguais, portanto utilizamos de uma classe unica para faze-lo
         new SerieAdapter.DownloadImagemTask(this.vImagem).execute(extras.getString("imagem"));
 
     }

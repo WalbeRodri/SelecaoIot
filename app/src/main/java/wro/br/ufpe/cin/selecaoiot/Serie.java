@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Walber on 11/08/2017.
  */
-
+//Objeto base
 public class Serie implements Serializable {
     /**Foram escolhidos apenas alguns itens principais para serem mostrados na tela,
      *  com intuito de diminuir a poluicao visual**/
